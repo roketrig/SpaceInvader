@@ -7,13 +7,21 @@ public class PlayerShoot : MonoBehaviour
 {
     public Bullet bullet;
     public Transform ShootPos;
+    private float nextFireTime;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= nextFireTime)
         {
-            Debug.Log("SpaceBasıldı");
-            Instantiate(bullet.bulletPrefab, ShootPos.position,ShootPos.rotation);
+            Shoot();
         }
+    }
+
+    private void Shoot()
+    {
+        
+        Instantiate(bullet.bulletPrefab, ShootPos.position,ShootPos.rotation);
+
+        nextFireTime = Time.time + bullet.fireRate;
     }
 }
